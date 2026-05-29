@@ -11,9 +11,11 @@ export const meta = {
 
 // args = { home?: "~/.claude", outDir?: "...", maxRecsToVerify?: 40 }
 const A = (args && typeof args === 'object') ? args : {}
-const HOME = A.home || `${process.env.HOME}/.claude`
+// NOTE: the workflow runtime exposes no `process`/Node APIs. Paths use ~ and are
+// expanded by the agents' shell. Pass absolute home/outDir via args to override.
+const HOME = A.home || '~/.claude'
 const STAMP = A.stamp || 'audit'   // pass a date stamp from the caller; runtime has no Date.now()
-const OUT = A.outDir || `${process.env.HOME}/.claude/harness-audit-${STAMP}`
+const OUT = A.outDir || `~/.claude/harness-audit-${STAMP}`
 
 const CTX = `
 This audits the LIVE Claude Code harness under ${HOME} on this machine. Read real files; cite file:line.

@@ -8,7 +8,7 @@ export const meta = {
 // args = { target, repo?, threshold?=8, cleanRounds?=2, maxRounds?=8, autoFix?=true, criteria? }
 const A = (args && typeof args === 'object') ? args : {}
 const TARGET = A.target || A.t || 'the most recent uncommitted change set in this repo'
-const REPO = A.repo || process.env.PWD || '.'
+const REPO = A.repo || '.'
 const THRESHOLD = Number(A.threshold ?? 8)
 const NEED_CLEAN = Number(A.cleanRounds ?? 2)
 const MAX_ROUNDS = Number(A.maxRounds ?? 8)
