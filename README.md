@@ -19,7 +19,7 @@ This skill turns the **Claude Code Workflows feature** (write scripts that call 
 ## Install
 
 ```bash
-git clone https://github.com/<you>/claude-harness-audit
+git clone https://github.com/Dallionking/claude-harness-audit
 cd claude-harness-audit
 ./install.sh          # symlinks the skill + workflows into ~/.claude/
 ```
