@@ -10,7 +10,9 @@ export const meta = {
 }
 
 // args = { home?: "~/.claude", outDir?: "...", maxRecsToVerify?: 40 }
-const A = (args && typeof args === 'object') ? args : {}
+let A = args
+if (typeof A === 'string') { try { A = JSON.parse(A) } catch { A = {} } }
+if (!A || typeof A !== 'object') A = {}
 // NOTE: the workflow runtime exposes no `process`/Node APIs. Paths use ~ and are
 // expanded by the agents' shell. Pass absolute home/outDir via args to override.
 const HOME = A.home || '~/.claude'

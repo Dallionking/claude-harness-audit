@@ -58,6 +58,16 @@ Run a single bounded gap-analysis loop on anything:
 
 The audit's first pass is a hypothesis. The verify phase re-reads the cited file *right now* and tries to refute each claim. In testing on a large real harness, this caught recommendations that would have caused wrong fixes — editing paths that don't exist, using a CLI flag that isn't real, deleting a still-live component. **Never apply an unverified harness recommendation.**
 
+## Workflow runtime notes (gotchas we hit, so you don't)
+
+Authoring dynamic workflows surfaced three constraints worth knowing:
+
+1. **No `process` / Node APIs in the sandbox.** The workflow body can't read `process.env.HOME`/`PWD`. Use `~`-relative paths (the agents' shell expands them) or pass absolute paths via `args`.
+2. **`args` can arrive stringified.** Guard it: `let A = args; if (typeof A === 'string') { try { A = JSON.parse(A) } catch { A = {} } }`. Otherwise a passed object silently becomes empty and your defaults take over.
+3. **`name:` resolution can serve a stale cached copy.** After editing a saved workflow, invoke it with `Workflow({ scriptPath: "…/your.workflow.js" })` (and call sub-workflows via `workflow({ scriptPath })`) to force the fresh file. `Workflow({ name })` may run a previously cached version.
+
+Also: top-level `return`/`await` in a workflow body are valid (the runtime wraps it in an async function) — `node --check` will flag them as a false positive; ignore those two specific errors.
+
 ## License
 
 MIT — see [LICENSE](LICENSE). Built with Claude Code.

@@ -6,7 +6,9 @@ export const meta = {
 
 // ── args (all optional except target) ────────────────────────────────────────
 // args = { target, repo?, threshold?=8, cleanRounds?=2, maxRounds?=8, autoFix?=true, criteria? }
-const A = (args && typeof args === 'object') ? args : {}
+let A = args
+if (typeof A === 'string') { try { A = JSON.parse(A) } catch { A = {} } }
+if (!A || typeof A !== 'object') A = {}
 const TARGET = A.target || A.t || 'the most recent uncommitted change set in this repo'
 const REPO = A.repo || '.'
 const THRESHOLD = Number(A.threshold ?? 8)
