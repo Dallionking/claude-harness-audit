@@ -3,3 +3,9 @@ node_modules/
 *.log
 bench/
 harness-audit-*/
+
+# Local/personal artifacts — never publish
+content/*.html
+.sprint-state.json
+.pipeline-state.json
+.claude/agent-memory/
