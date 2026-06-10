@@ -106,6 +106,7 @@ const bench = await agent(`${CTX}\nDesign a runnable benchmark suite so each con
 log(`Benchmarks: ${bench.benchmarks.length} defined, ${bench.gaps.length} gaps`)
 
 return {
+  out_dir: OUT,
   executive_summary: synthesis.executive_summary,
   counts: { recommendations: recs.length, confirmed: by('confirmed').length, needs_scoping: by('needs-scoping').length, rejected: by('rejected').length, benchmarks: bench.benchmarks.length, workflow_candidates: synthesis.workflow_candidates.length },
   confirmed: by('confirmed').map((v) => v.rec_id),

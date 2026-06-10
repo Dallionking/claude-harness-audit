@@ -26,8 +26,10 @@ Turns the Claude Code **Workflows** feature on your own `~/.claude/` to find rot
 2. Run the workflow:
 
 ```
-Workflow({ name: "harness-audit" })
+Workflow({ name: "harness-audit", args: { stamp: "<today's date, YYYY-MM-DD>" } })
 ```
+
+Pass today's date as `stamp` so artifacts land in `~/.claude/harness-audit-<date>/`, the same directory as the bench baseline below (without `args.stamp` the workflow defaults to `~/.claude/harness-audit-audit/`).
 
 Or, if invoked conversationally, the orchestrator should:
 - Capture a baseline snapshot first (see `bench` below) — the immutable "before".

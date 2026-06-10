@@ -3,6 +3,7 @@ node_modules/
 *.log
 bench/
 harness-audit-*/
+harness-optimize-*/
 
 # Local/personal artifacts — never publish
 content/*.html
