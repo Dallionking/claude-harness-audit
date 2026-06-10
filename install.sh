@@ -19,6 +19,7 @@ place() {
 
 echo "Installing claude-harness-audit -> $DEST"
 place "$SRC/skills/harness-audit" "$DEST/skills/harness-audit"
+place "$SRC/skills/harness-optimize" "$DEST/skills/harness-optimize"
 for wf in "$SRC"/workflows/*.workflow.js; do
   place "$wf" "$DEST/workflows/$(basename "$wf")"
 done
@@ -27,8 +28,10 @@ cat <<'EOF'
 
 Done. Next:
   1. Enable workflows:  Claude Code -> /config -> Dynamic workflows -> on  (needs v2.1.154+)
-  2. Run it:            /harness-audit     (or: "audit my Claude Code harness")
-  3. Single gap loop:   /gap-loop
+  2. Audit only:        /harness-audit       (or: "audit my Claude Code harness")
+  3. Audit + APPLY:     /harness-optimize    (or: "optimize my harness")
+  4. Single gap loop:   /gap-loop
 
-Artifacts land in ~/.claude/harness-audit-<date>/. Commit bench/baseline/ as your "before".
+Artifacts land in ~/.claude/harness-{audit,optimize}-<stamp>/ (the skills pass today's date as the stamp). Commit bench/baseline/ as your "before".
+harness-optimize backs up every file it touches to ~/.claude/backups/harness-optimize-<date>/ and never deletes.
 EOF

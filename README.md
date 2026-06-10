@@ -1,6 +1,10 @@
+<p align="center">
+  <img src="assets/banner.png" alt="claude-harness-audit — find and fix the rot in your Claude Code harness" width="100%">
+</p>
+
 # claude-harness-audit
 
-**Audit your Claude Code harness with the Workflows feature — find dead hooks, bloated context, stale config, and rituals you should turn into scripts. Every finding is adversarially verified and shipped with a benchmark so you can prove the fix worked.**
+**Audit your Claude Code harness with the Workflows feature — find dead hooks, bloated context, stale config, and rituals you should turn into scripts. Every finding is adversarially verified and shipped with a benchmark so you can prove the fix worked. Then run `/harness-optimize` to actually apply the fixes — backup-first, verified, nothing ever deleted.**
 
 If you've grown a real Claude Code setup — custom hooks, dozens of agents, hundreds of skills, slash commands, session history — it rots. Hooks point at files you renamed. Your `CLAUDE.md` claims a guardrail is active when the script behind it is disabled. `references/` quietly grows to gigabytes and poisons every `grep`. You run the same multi-agent ritual (gap analysis, gate pipelines, councils) by hand every session, burning tokens babysitting subagents.
 
@@ -26,7 +30,7 @@ cd claude-harness-audit
 
 Or copy manually:
 ```bash
-cp -r skills/harness-audit ~/.claude/skills/
+cp -r skills/harness-audit skills/harness-optimize ~/.claude/skills/
 cp workflows/*.workflow.js ~/.claude/workflows/
 ```
 
@@ -37,6 +41,12 @@ In Claude Code:
 /harness-audit
 ```
 or just ask: *"audit my Claude Code harness."* The skill runs the workflow, writes artifacts to `~/.claude/harness-audit-<date>/`, and reports what to delete, update, enhance, plus a benchmark suite.
+
+To go from findings to applied fixes in one run:
+```
+/harness-optimize
+```
+or ask: *"optimize my harness."* It discovers what you actually have (a bare `~/.claude/` is enough; Codex, RTK, big session histories are detected and included only if present), scans for the expensive stuff — dead hook references, hooks firing on every prompt/tool-call, duplicate prompt-injectors, unbounded state files, plaintext secrets, instruction-surface bloat, session-history friction — asks you the few decisions that are genuinely yours (cleanup aggressiveness, scope), then applies the fixes. Every touched file is backed up first to `~/.claude/backups/harness-optimize-<date>/`, every config edit is re-validated, every fix is verified with real output, and it ends with a PASS/MISS/SKIP table. It never deletes anything — retire-to-backup only — and it will refuse to loosen your permission rules to "reduce friction."
 
 Run a single bounded gap-analysis loop on anything:
 ```
