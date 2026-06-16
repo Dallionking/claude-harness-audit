@@ -10,3 +10,6 @@ content/*.html
 .sprint-state.json
 .pipeline-state.json
 .claude/agent-memory/
+
+# local skill-parity classification (private)
+tools/skill-parity/skill-parity.config.sh
